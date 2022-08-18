@@ -1,16 +1,10 @@
 pipeline {
-    agent {
-        label "ansible_docker"
-    }
-
+    agent any
+   
     stages {
-        stage('prepare_node') {
+        stage('Deploy') {
             steps {
-                git 'https://github.com/evgeny-brianov/example-playbook.git'
-                sh 'ansible-vault decrypt secret --vault-password-file vault_pass'
-                sh 'mkdir ~/.ssh/ && mv ./secret ~/.ssh/id_rsa && chmod 400 ~/.ssh/id_rsa'
-                sh 'ansible-galaxy install -r requirements.yml -p roles'
-                sh 'ansible-playbook site.yml -i inventory/prod.yml'
+                sh 'ansible --version'
             }
         }
     }
